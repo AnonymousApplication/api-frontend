@@ -13,6 +13,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Modal from 'react-bootstrap/Modal';
 import Pagination from 'react-bootstrap/Pagination';
+import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -153,30 +154,32 @@ export default function Home({
                 <Col>
                     <Navbar>
                         <Navbar.Brand>Task Management</Navbar.Brand>
-                        <Form>
-                            <Row>
-                                <Col className="pe-1">
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter Task ID"
-                                    />
-                                </Col>
-                                <Col className="ps-1">
-                                    <Button type="submit">Get</Button>
-                                </Col>
-                            </Row>                            
-                        </Form>
-                        <Nav.Link href="task">
-                            <Button>Add</Button>
+                        <Pagination aria-label="Task pagination" className="mb-0">
+                            {first_link && 
+                            <Pagination.First aria-label="First page" onClick={() => fetchTasks(first_link) } /> 
+                            }
+                            {previous_link &&
+                            <Pagination.Prev aria-label="Previous page" onClick={() => fetchTasks(previous_link) } />
+                            }
+                            {next_link && 
+                            <Pagination.Next aria-label="Next page" onClick={() => fetchTasks(next_link) } />
+                            }
+                            {last_link && 
+                            <Pagination.Last aria-label="Last page" onClick={() => fetchTasks(last_link) } />
+                            }
+                        </Pagination>
+                        <Nav.Link href="task" className="ms-auto">
+                            <Button>Add a task</Button>
                         </Nav.Link>
                     </Navbar>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Table bordered>
+                    <Table>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Task title</th>
                                 <th>Task description</th>
                                 <th>Task status</th>
@@ -187,6 +190,7 @@ export default function Home({
                         <tbody>
                             {task_data.map((task: any) => (
                             <tr key={task.id}>
+                                <td>{task.id}</td>
                                 <td>{task.task_title}</td>
                                 <td>{task.task_desc}</td>
                                 <td>
@@ -204,7 +208,7 @@ export default function Home({
                                     </Form.Select>
                                 </td>
                                 <td>{getFormattedDate(task.due)}</td>
-                                <td>
+                                <td className="me-0">
                                     <Button variant="danger" onClick={() => handleShow(task.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -214,24 +218,6 @@ export default function Home({
                                 </td>
                             </tr>
                             ))}
-                            <tr>
-                                <td colSpan={5} className="text-center">
-                                    <Pagination aria-label="Task pagination" className="mb-0">
-                                        {first_link && 
-                                        <Pagination.First aria-label="First page" onClick={() => fetchTasks(first_link) } /> 
-                                        }
-                                        {previous_link &&
-                                        <Pagination.Prev aria-label="Previous page" onClick={() => fetchTasks(previous_link) } />
-                                        }
-                                        {next_link && 
-                                        <Pagination.Next aria-label="Next page" onClick={() => fetchTasks(next_link) } />
-                                        }
-                                        {last_link && 
-                                        <Pagination.Last aria-label="Last page" onClick={() => fetchTasks(last_link) } />
-                                        }
-                                    </Pagination>
-                                </td>
-                            </tr>
                         </tbody>
                     </Table>
                 </Col>
