@@ -1,5 +1,4 @@
 import type { Route } from "./+types/task";
-import { useState } from 'react';
 import { Form, redirect } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +19,9 @@ export function meta({ }: Route.MetaArgs) {
         { name: "description", content: "Add/Edit/Delete a task" },
     ];
 }
+
+
+import { type Task_Status } from '../types';
 
 
 export async function clientLoader() {
@@ -83,7 +85,6 @@ export default function Task({
 
     const { status_data } = loaderData;
     const navigate = useNavigate();
-    const [message, setMessage] = useState("");
 
     return (
         <div>
@@ -107,7 +108,7 @@ export default function Task({
                         <FormGroup className="mb-3" controlId="formTaskStatus">
                             <FormLabel>Task status</FormLabel>
                             <FormSelect name="task_status" aria-label="task status" required>
-                                {status_data.map((task_status: any) => (
+                                {status_data.map((task_status: Task_Status) => (
                                     <option value={task_status.id} key={task_status.id}>{task_status.status_desc}</option>
                                 ))}
                             </FormSelect>

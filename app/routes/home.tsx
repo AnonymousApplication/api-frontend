@@ -20,6 +20,8 @@ import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 import 'intro.js/themes/introjs-modern.css';
 
+import { type Task, type Task_Status } from '../types';
+
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -68,28 +70,28 @@ export default function Home({
     const [task_data, setTasks] = useState([]);
 
     // set pagination links
-	const [first_link, setFirstLink] = useState([]);
-	const [last_link, setLastLink] = useState([]);
-	const [previous_link, setPreviousLink] = useState([]);
-	const [next_link, setNextLink] = useState([]);
+	const [first_link, setFirstLink] = useState("");
+	const [last_link, setLastLink] = useState("");
+	const [previous_link, setPreviousLink] = useState("");
+	const [next_link, setNextLink] = useState("");
 
     // delete confirmation
     const [show, setShow] = useState(false);
-    const [deleteId, setDeleteId] = useState("");
+    const [deleteId, setDeleteId] = useState(0);
     const handleNo = () => {
         setShow(false);
-        setDeleteId("");
+        setDeleteId(0);
     }
     const handleYes = () => {
         setShow(false);
         deleteTask();
     }
-    const handleShow = (task_id: string) => {
+    const handleShow = (task_id: number) => {
         setShow(true);
         setDeleteId(task_id);
     }
 
-    const fetchTasks = async (pagination: any) => {
+    const fetchTasks = async (pagination: string) => {
 
 		try {
 			const response = await fetch(api_url+pagination, {credentials: "include"})
@@ -110,7 +112,7 @@ export default function Home({
 		}
 	}
 
-    const changeStatus = async (task_id: string, status_value: string) => {
+    const changeStatus = async (task_id: number, status_value: string) => {
         const update_response = await fetch(`${api_url}/tasks/${task_id}`, {
             method: "PATCH",
             headers: { 
@@ -138,7 +140,7 @@ export default function Home({
             method: "DELETE",
             credentials: "include",
         });
-        setDeleteId("");
+        setDeleteId(0);
 
         if (delete_response.status >= 200 && delete_response.status <= 299) {
             window.location.reload();
@@ -200,7 +202,7 @@ export default function Home({
                             </tr>
                         </thead>
                         <tbody>
-                            {task_data.map((task: any) => (
+                            {task_data.map((task: Task) => (
                             <tr key={task.id}>
                                 <td>{task.id}</td>
                                 <td>{task.task_title}</td>
@@ -214,7 +216,7 @@ export default function Home({
                                                 changeStatus(task.id, e.target.value);
                                         }}
                                     >
-                                    {status_data.map((task_status: any) => (
+                                    {status_data.map((task_status: Task_Status) => (
                                         <option value={task_status.id} key={task_status.id}>{task_status.status_desc}</option>
                                     ))}
                                     </Form.Select>
