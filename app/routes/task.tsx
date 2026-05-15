@@ -14,7 +14,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Task Management - Task Screen" },
         { name: "description", content: "Add/Edit/Delete a task" },
@@ -26,38 +26,38 @@ export async function clientLoader() {
 
     const api_url: string = import.meta.env.VITE_APP_URL;
 
-    const status_res = await fetch(api_url + "/statuses/", {credentials: "include"});
+    const status_res = await fetch(api_url + "/statuses/", { credentials: "include" });
     const status_data = await status_res.json();
-    
-    return {status_data}
+
+    return { status_data }
 }
 
 
 export async function clientAction({
-  request
+    request
 }: Route.ClientActionArgs) {
 
     const api_url: string = import.meta.env.VITE_APP_URL;
 
-	let formData = await request.formData();
+    let formData = await request.formData();
 
     const task_title = formData.get("task_title") as String;
-	const task_desc = formData.get("task_desc") as String;
-	const task_status = formData.get("task_status") as String;
-	const task_date = formData.get("task_date") as String;
+    const task_desc = formData.get("task_desc") as String;
+    const task_status = formData.get("task_status") as String;
+    const task_date = formData.get("task_date") as String;
     const task_time = formData.get("task_time") as String;
 
     const due = task_date + "T" + task_time + ":00.000Z";
 
-    const save_response = await fetch(`${api_url}/tasks/`, 
+    const save_response = await fetch(`${api_url}/tasks/`,
         {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json"
             },
             credentials: "include",
             body: JSON.stringify(
-                { 
+                {
                     task_title: task_title,
                     task_desc: task_desc,
                     status_id: task_status,
@@ -66,10 +66,10 @@ export async function clientAction({
             )
         }
     )
-    const result = await save_response.json();
-    if(result.status >= 200 && result.status <= 299) {
+
+    if (save_response.status >= 200 && save_response.status <= 299) {
         return redirect("/");
-    } 
+    }
     else {
         return "There was a problem saving the task."
     }
@@ -81,7 +81,7 @@ export default function Task({
     loaderData
 }: Route.ComponentProps) {
 
-    const {status_data} = loaderData;
+    const { status_data } = loaderData;
     const navigate = useNavigate();
     const [message, setMessage] = useState("");
 

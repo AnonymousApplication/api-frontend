@@ -120,10 +120,8 @@ export default function Home({
         });
         const result = await update_response.json();
 
-        console.log(update_response)
-        
-        if (result.status >= 200 && result.status <= 299) {
-			setMessage("Status updated for task with title: '" + result.task.task_title + "'");
+        if (update_response.status >= 200 && update_response.status <= 299) {
+			setMessage("Status updated for task with title: '" + result.task_title + "'");
 		} 
         else {
             setMessage("There was a problem updating the status.");
@@ -135,10 +133,9 @@ export default function Home({
             method: "DELETE",
             credentials: "include",
         });
-        const result = await delete_response.json();
         setDeleteId("");
 
-        if (result.status >= 200 && result.status <= 299) {
+        if (delete_response.status >= 200 && delete_response.status <= 299) {
             window.location.reload();
 		} 
         else {
