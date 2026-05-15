@@ -12,6 +12,7 @@
     "@react-router/node": "7.15.0",
     "@react-router/serve": "7.15.0",
     "bootstrap": "^5.3.8",
+    "intro.js": "^8.3.2",
     "isbot": "^5.1.36",
     "react": "^19.2.6",
     "react-bootstrap": "^2.10.10",

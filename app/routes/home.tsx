@@ -13,8 +13,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Modal from 'react-bootstrap/Modal';
 import Pagination from 'react-bootstrap/Pagination';
-import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+// JS Tour
+import introJs from 'intro.js';
+import 'intro.js/introjs.css';
+import 'intro.js/themes/introjs-modern.css';
 
 
 export function meta({}: Route.MetaArgs) {
@@ -153,8 +157,16 @@ export default function Home({
             <Row>
                 <Col>
                     <Navbar>
-                        <Navbar.Brand>Task Management</Navbar.Brand>
-                        <Pagination aria-label="Task pagination" className="mb-0">
+                        <Nav.Link href="" onClick={() => introJs.tour().start() }>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                            </svg>
+                        </Nav.Link>
+                        <Navbar.Brand className="ms-2">
+                            Task Management
+                        </Navbar.Brand>
+                        <Pagination aria-label="Task pagination" className="mb-0" data-intro="Navigate through the pages of tasks with these controls" data-step="2">
                             {first_link && 
                             <Pagination.First aria-label="First page" onClick={() => fetchTasks(first_link) } /> 
                             }
@@ -176,7 +188,7 @@ export default function Home({
             </Row>
             <Row>
                 <Col>
-                    <Table>
+                    <Table data-intro="A table with all the tasks" data-step="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -225,7 +237,7 @@ export default function Home({
             <Row>
                 <Col>
                     <Card>
-                        <Card.Body className="text-muted">{message}</Card.Body>
+                        <Card.Body className="text-muted" data-intro="Status messages will appear here" data-step="3">{message}</Card.Body>
                     </Card>
                 </Col>
             </Row>
