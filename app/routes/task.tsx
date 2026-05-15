@@ -49,13 +49,6 @@ export async function clientAction({
 
     const due = task_date + "T" + task_time + ":00.000Z";
 
-    console.log("Task title is : " + task_title);
-    console.log("Task description is : " + task_desc);
-    console.log("Task status is : " + task_status);
-    console.log("Task date is : " + task_date);
-    console.log("Task time is : " + task_time);
-    console.log("due is : " + due);
-
     const save_response = await fetch(`${api_url}/tasks/`, 
         {
             method: "POST",
@@ -74,7 +67,6 @@ export async function clientAction({
         }
     )
     const result = await save_response.json();
-    console.log(result);
     if(result.status >= 200 && result.status <= 299) {
         return redirect("/");
     } 

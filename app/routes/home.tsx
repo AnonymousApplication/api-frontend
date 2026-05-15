@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,6 +12,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Modal from 'react-bootstrap/Modal';
+import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -42,18 +43,13 @@ function getFormattedDate(input_date: string) {
 }
 
 
-export async function clientLoader({
-    params,
-}: Route.ClientLoaderArgs) {
+export async function clientLoader() {
     const api_url: string = import.meta.env.VITE_APP_URL;
-
-    const task_res = await fetch(api_url + "/", {credentials: "include"});
-    const task_data = await task_res.json();
 
     const status_res = await fetch(api_url + "/statuses/", {credentials: "include"});
     const status_data = await status_res.json();
     
-    return {task_data, status_data, api_url};
+    return {status_data, api_url};
 }
 
 
@@ -62,8 +58,15 @@ export default function Home({
 }: Route.ComponentProps) {
 
     const navigate = useNavigate();
-    const {task_data, status_data, api_url} = loaderData;
+    const {status_data, api_url} = loaderData;
     const [message, setMessage] = useState("");
+    const [task_data, setTasks] = useState([]);
+
+    // set pagination links
+	const [first_link, setFirstLink] = useState([]);
+	const [last_link, setLastLink] = useState([]);
+	const [previous_link, setPreviousLink] = useState([]);
+	const [next_link, setNextLink] = useState([]);
 
     // delete confirmation
     const [show, setShow] = useState(false);
@@ -81,6 +84,27 @@ export default function Home({
         setDeleteId(task_id);
     }
 
+    const fetchTasks = async (pagination: any) => {
+
+		try {
+			const response = await fetch(api_url+pagination, {credentials: "include"})
+			const tasks = await response.json();
+
+			setTasks(tasks.items);
+
+			// set pagination links
+			setFirstLink(tasks.links.first);
+			setLastLink(tasks.links.last);
+			setPreviousLink(tasks.links.prev);
+			setNextLink(tasks.links.next);
+		}
+		catch(error) {
+			console.log('There was an error', error);
+			navigate("/");
+			return;
+		}
+	}
+
     const changeStatus = async (task_id: string, status_value: string) => {
         const update_response = await fetch(`${api_url}/tasks/${task_id}`, {
             method: "PATCH",
@@ -95,6 +119,8 @@ export default function Home({
             )
         });
         const result = await update_response.json();
+
+        console.log(update_response)
         
         if (result.status >= 200 && result.status <= 299) {
 			setMessage("Status updated for task with title: '" + result.task.task_title + "'");
@@ -119,6 +145,10 @@ export default function Home({
             setMessage("There was a problem deleting the task.");
         }
     }
+
+    useEffect(() => {
+		fetchTasks("");
+	}, []);
 
     return (
         <Container className="p-3" fluid>
@@ -188,7 +218,22 @@ export default function Home({
                             </tr>
                             ))}
                             <tr>
-                                <td colSpan={5}>Pagination</td>
+                                <td colSpan={5} className="text-center">
+                                    <Pagination aria-label="Task pagination" className="mb-0">
+                                        {first_link && 
+                                        <Pagination.First aria-label="First page" onClick={() => fetchTasks(first_link) } /> 
+                                        }
+                                        {previous_link &&
+                                        <Pagination.Prev aria-label="Previous page" onClick={() => fetchTasks(previous_link) } />
+                                        }
+                                        {next_link && 
+                                        <Pagination.Next aria-label="Next page" onClick={() => fetchTasks(next_link) } />
+                                        }
+                                        {last_link && 
+                                        <Pagination.Last aria-label="Last page" onClick={() => fetchTasks(last_link) } />
+                                        }
+                                    </Pagination>
+                                </td>
                             </tr>
                         </tbody>
                     </Table>
