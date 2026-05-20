@@ -17,6 +17,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { type Task_Status } from '../types';
+
 
 export function meta({ }: Route.MetaArgs) {
     return [
@@ -24,9 +26,6 @@ export function meta({ }: Route.MetaArgs) {
         { name: "description", content: "Add/Edit/Delete a task" },
     ];
 }
-
-
-import { type Task_Status } from '../types';
 
 
 export async function clientLoader({ 
@@ -46,17 +45,15 @@ export async function clientLoader({
         task_date: undefined,
         due: ""
     }
-    let addScreen: boolean = true;
     if(task_id) {
         const task_res = await fetch(api_url + "/tasks/"+task_id, { credentials: "include" });
         task_data = await task_res.json();
-        addScreen = false;
     }
 
     const status_res = await fetch(api_url + "/statuses/", { credentials: "include" });
     const status_data = await status_res.json();
 
-    return { status_data, task_data, addScreen, api_url }
+    return { status_data, task_data, api_url }
 }
 
 
@@ -128,7 +125,7 @@ export default function Task({
     loaderData
 }: Route.ComponentProps) {
 
-    const { status_data, task_data, addScreen, api_url } = loaderData;
+    const { status_data, task_data, api_url } = loaderData;
     const navigate = useNavigate();
 
     // delete confirmation
@@ -159,10 +156,10 @@ export default function Task({
         <div>
             <Card className="m-3">
                 <Card.Header>
-                    {addScreen ? "Add a task" : task_data.task_title }
+                    {task_data.id === 0 ? "Add a task" : task_data.task_title }
                 </Card.Header>
                 <Card.Body>
-                    {addScreen ? 
+                    {task_data.id === 0 ? 
                     <Form method="post"> 
                         <FormGroup className="mb-3" controlId="formTaskTitle">
                             <FormLabel>Task title</FormLabel>
