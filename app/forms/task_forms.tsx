@@ -85,8 +85,6 @@ export function EditDeleteTaskForm(props: any) {
     const task_data = props.task_data;
     const status_data = props.status_data;
 
-    const api_url: string = import.meta.env.VITE_APP_URL;
-
     const navigate = useNavigate();
 
     // delete confirmation
@@ -96,31 +94,10 @@ export function EditDeleteTaskForm(props: any) {
     }
     const handleYes = () => {
         setDeleteShow(false);
-        deleteTask();
+        props.deleteTask();
     }
-    const handleDeleteShow = (task_id: number) => {
+    const handleDeleteShow = () => {
         setDeleteShow(true);
-    }
-
-    const deleteTask = async () => {
-        try {
-            const delete_response = await fetch(`${api_url}/tasks/${task_data.id}`, {
-                method: "DELETE",
-                credentials: "include",
-            });
-            if (!delete_response.ok) {
-                throw new Error(`Response status from deleting: ${delete_response.status}`);
-            }
-
-            if (delete_response.status >= 200 && delete_response.status <= 299) {
-                navigate('/');
-            }
-        }
-        catch(error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-            }
-        }
     }
 
     return (
@@ -152,7 +129,7 @@ export function EditDeleteTaskForm(props: any) {
             </FormGroup>
             <ButtonGroup aria-label="Save, Delete and Cancel buttons">
                 <Button variant="primary" type="submit">Save</Button>
-                <Button className="ms-auto" variant="danger" onClick={() => handleDeleteShow(task_data.id)}>
+                <Button className="ms-auto" variant="danger" onClick={() => handleDeleteShow()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>

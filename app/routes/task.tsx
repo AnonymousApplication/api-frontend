@@ -1,6 +1,7 @@
 import type { Route } from "./+types/task";
 import { redirect } from 'react-router';
 import { getFormattedDate } from "../root";
+import { useNavigate } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -130,6 +131,31 @@ export default function Task({
 
     const { status_data, task_data } = loaderData;
 
+    const api_url: string = import.meta.env.VITE_APP_URL;
+
+    const navigate = useNavigate();
+
+    const deleteTask = async () => {
+        try {
+            const delete_response = await fetch(`${api_url}/tasks/${task_data.id}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+            if (!delete_response.ok) {
+                throw new Error(`Response status from deleting: ${delete_response.status}`);
+            }
+
+            if (delete_response.status >= 200 && delete_response.status <= 299) {
+                navigate('/');
+            }
+        }
+        catch(error) {
+            if(error instanceof Error) {
+                console.error(error.message);
+            }
+        }
+    }
+
     return (
         <div>
             <Card className="m-3">
@@ -143,7 +169,7 @@ export default function Task({
                     <div>
                         <p>{task_data.task_desc ? task_data.task_desc: "No description."}</p>
                         <p><b>Due:</b> {getFormattedDate(task_data.due)}</p>
-                        <EditDeleteTaskForm task_data={task_data} status_data={status_data} />
+                        <EditDeleteTaskForm task_data={task_data} status_data={status_data} deleteTask={deleteTask} />
                     </div>
                     }
                 </Card.Body>
