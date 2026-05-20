@@ -75,7 +75,7 @@ export default function Home() {
             <Row>
                 <Col>
                     <Navbar>
-                        <Nav.Link href="" onClick={() => introJs.tour().start() }>
+                        <Nav.Link href="" onClick={() => introJs.tour().start() } aria-label="Page tour button" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                 <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
@@ -103,7 +103,7 @@ export default function Home() {
             </Row>
             <Row>
                 <Col>
-                    <Table data-intro="Your tasks. Select a row to edit a task." data-step="1" hover>
+                    <Table data-intro="Your tasks. Select a row to edit a task." data-step="1" aria-label="table of tasks" hover>
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -126,7 +126,7 @@ export default function Home() {
             <Row>
                 <Col>
                     <Nav.Link href="task" data-intro="Add a new task." data-step="3" className="d-grid">
-                        <Button>Add new task</Button>
+                        <Button aria-label="Add button">Add new task</Button>
                     </Nav.Link>  
                 </Col>
             </Row>

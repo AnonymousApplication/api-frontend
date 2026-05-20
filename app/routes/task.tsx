@@ -190,6 +190,7 @@ export default function Task({
                             <FormLabel>Task title</FormLabel>
                             <FormControl 
                                 name="task_title" 
+                                aria-label="task title" 
                                 type="text" 
                                 placeholder="Enter task title"
                                 required />
@@ -200,6 +201,7 @@ export default function Task({
                                 as="textarea" 
                                 rows={3} 
                                 name="task_desc" 
+                                aria-label="task description" 
                                 placeholder="Enter task description" />
                             <FormText className="text-muted">
                                 This is optional
@@ -222,10 +224,12 @@ export default function Task({
                             <FormControl 
                                 name="task_date" 
                                 type="date"
+                                aria-label="task date" 
                                 required />
                             <FormControl 
                                 name="task_time" 
-                                type="time" 
+                                type="time"
+                                aria-label="task time"  
                                 className="mt-2" 
                                 required />
                         </FormGroup>
@@ -244,7 +248,8 @@ export default function Task({
                                 <Col sm="10">
                                     <FormControl 
                                         name="id" 
-                                        type="text" 
+                                        type="text"
+                                        aria-label="task id"  
                                         defaultValue={task_data.id}
                                         readOnly />
                                 </Col>
@@ -263,7 +268,7 @@ export default function Task({
                                     </FormSelect>
                                 </Col>
                             </FormGroup>
-                            <ButtonGroup aria-label="Save and Submit buttons">
+                            <ButtonGroup aria-label="Save, Delete and Cancel buttons">
                                 <Button variant="primary" type="submit">Save</Button>
                                 <Button className="ms-auto" variant="danger" onClick={() => handleDeleteShow(task_data.id)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
