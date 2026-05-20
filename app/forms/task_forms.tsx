@@ -14,7 +14,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { type Task, type Task_Status } from '../types';
+import { type Task_Status } from '../types';
 
 
 export function NewTaskForm(props: any) {
