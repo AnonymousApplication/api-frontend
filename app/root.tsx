@@ -23,6 +23,24 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export function getFormattedDate(input_date: string) {
+
+	const date = new Date(input_date);
+
+	const timeFormat: Intl.DateTimeFormatOptions = { 
+        timeZone: 'GMT',
+        year: 'numeric', 
+        month: 'long', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: false, 
+        day: 'numeric' 
+    };
+	let formatted_date: string = date.toLocaleDateString("en-GB", timeFormat);
+
+	return formatted_date;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
