@@ -50,7 +50,7 @@ npm run build
 ## Screenshots
 
 ### The home page
-![The home screen](screenshots/home_screen.png?raw=true)
+![The home screen](screenshots/home_page.png?raw=true)
 
 ### Add a task
 ![Add a task](screenshots/add_task.png?raw=true)
