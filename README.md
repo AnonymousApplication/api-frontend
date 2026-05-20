@@ -48,3 +48,12 @@ npm run build
 ```
 
 ## Screenshots
+
+### The home page
+![The home screen](screenshots/home_screen.png?raw=true)
+
+### Add a task
+![Add a task](screenshots/add_task.png?raw=true)
+
+### Edit a task
+![Edit a task](screenshots/edit_task.png?raw=true)

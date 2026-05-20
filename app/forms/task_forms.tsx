@@ -19,7 +19,7 @@ import { type Task, type Task_Status } from '../types';
 
 export function NewTaskForm(props: any) {
 
-    const status_data: Task_Status = props.status_data;
+    const status_data = props.status_data;
 
     const navigate = useNavigate();
 
@@ -82,8 +82,8 @@ export function NewTaskForm(props: any) {
 
 export function EditDeleteTaskForm(props: any) {
 
-    const task_data: Task = props.task_data;
-    const status_data: Task_Status = props.status_data;
+    const task_data = props.task_data;
+    const status_data = props.status_data;
 
     const api_url: string = import.meta.env.VITE_APP_URL;
 
