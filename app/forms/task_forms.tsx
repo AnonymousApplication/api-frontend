@@ -19,8 +19,6 @@ import { type Task_Status } from '../types';
 
 export function NewTaskForm(props: any) {
 
-    console.log(props.status_data);
-
     const status_data = props.status_data;
 
     const navigate = useNavigate();
