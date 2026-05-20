@@ -1,6 +1,16 @@
 # Introduction
 
-A frontend using React Router to interact with data from an API.
+A frontend using React Router to interact with data from an API located at:
+https://github.com/AnonymousApplication/api-backend
+
+Some features:
+- Pagination for tasks
+- A button that gives you a guided tour of what you can do on the main page
+- Click on a task from the home screen to edit the status for a task
+- Add a new task
+- Delete a task
+
+See further down for some screenshots.
 
 ## Getting Started
 
@@ -10,6 +20,13 @@ Install the dependencies:
 
 ```bash
 npm install
+```
+
+### Environment variables
+
+To connect to the backend we need an environment variable pointing to it. E.g.
+```
+VITE_APP_URL=http://127.0.0.1:8000
 ```
 
 ### Development
@@ -30,24 +47,4 @@ Create a production build:
 npm run build
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+## Screenshots
