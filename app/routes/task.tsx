@@ -45,13 +45,28 @@ export async function clientLoader({
         task_date: undefined,
         due: ""
     }
-    if(task_id) {
-        const task_res = await fetch(api_url + "/tasks/"+task_id, { credentials: "include" });
-        task_data = await task_res.json();
-    }
+    let status_data = [];
 
-    const status_res = await fetch(api_url + "/statuses/", { credentials: "include" });
-    const status_data = await status_res.json();
+    try {
+        if(task_id) {
+            const task_res = await fetch(api_url + "/tasks/"+task_id, { credentials: "include" });
+            if (!task_res.ok) {
+                throw new Error(`Response status from getting tasks: ${task_res.status}`);
+            }
+            task_data = await task_res.json();
+        }
+
+        const status_res = await fetch(api_url + "/statuses/", { credentials: "include" });
+        if (!status_res.ok) {
+            throw new Error(`Response status from getting statuses: ${status_res.status}`);
+        }
+        status_data = await status_res.json();
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            console.error(error.message);
+        }
+    }
 
     return { status_data, task_data, api_url }
 }
@@ -142,13 +157,23 @@ export default function Task({
     }
 
     const deleteTask = async () => {
-        const delete_response = await fetch(`${api_url}/tasks/${task_data.id}`, {
-            method: "DELETE",
-            credentials: "include",
-        });
+        try {
+            const delete_response = await fetch(`${api_url}/tasks/${task_data.id}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+            if (!delete_response.ok) {
+                throw new Error(`Response status from deleting: ${delete_response.status}`);
+            }
 
-        if (delete_response.status >= 200 && delete_response.status <= 299) {
-            navigate('/');
+            if (delete_response.status >= 200 && delete_response.status <= 299) {
+                navigate('/');
+            }
+        }
+        catch(error) {
+            if(error instanceof Error) {
+                console.error(error.message);
+            }
         }
     }
 

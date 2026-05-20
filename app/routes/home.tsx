@@ -45,6 +45,10 @@ export default function Home() {
 
 		try {
 			const response = await fetch(api_url+pagination, {credentials: "include"})
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
 			const tasks = await response.json();
 
 			setTasks(tasks.items);
@@ -56,9 +60,9 @@ export default function Home() {
 			setNextLink(tasks.links.next);
 		}
 		catch(error) {
-			console.log('There was an error', error);
-			navigate("/");
-			return;
+            if(error instanceof Error) {
+			    console.error(error.message);
+            }
 		}
 	}
 
