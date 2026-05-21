@@ -57,7 +57,7 @@ npm run build
 
 ### Page tour
 
-By selecting the *i* icon in the top left of the screen it takes you through the different parrts of the page.
+By selecting the *i* icon in the top left of the screen it takes you through the different parts of the page.
 
 ![Page tour](screenshots/page_tour.png?raw=true)
 
