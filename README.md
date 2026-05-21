@@ -52,10 +52,19 @@ npm run build
 ## Screenshots
 
 ### The home page
+
 ![The home page](screenshots/home_page.png?raw=true)
 
+### Page tour
+
+By selecting the *i* icon in the top left of the screen it takes you through the different parrts of the page.
+
+![Page tour](screenshots/page_tour.png?raw=true)
+
 ### Add a task
+
 ![Add a task](screenshots/add_task.png?raw=true)
 
 ### Edit a task
+
 ![Edit a task](screenshots/edit_task.png?raw=true)
