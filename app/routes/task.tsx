@@ -159,7 +159,7 @@ export default function Task({
     return (
         <div>
             <Card className="m-3">
-                <Card.Header>
+                <Card.Header className="brand">
                     {task_data.id === 0 ? "Add a task" : task_data.task_title }
                 </Card.Header>
                 <Card.Body>
