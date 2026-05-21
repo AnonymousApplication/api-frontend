@@ -1,4 +1,6 @@
-# Introduction
+# API Frontend
+
+## Introduction
 
 A Task Manager frontend using React Router to interact with task data from an API located at:
 https://github.com/AnonymousApplication/api-backend
